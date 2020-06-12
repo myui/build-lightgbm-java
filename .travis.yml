@@ -2,9 +2,6 @@ env:
   global:
    - LIGHTGBM_VERSION=2.3.1
 
-   # travis encrypt -r myui/build-lightgbm-java --org GITHUB_OAUTH_TOKEN=<token>
-   - secure: "pVfZtIPt0nMe5b8Q8aSBAIverSnXb3wjXgN04HEWx+I95RqLR1Fgcl8wxlTa0VC89mk5+g3oR//6Jq6cTf0XmZLja85PL89cSrLLRlZFRk7FJxLOc85gby5Z//p6FC1MFoOugv+g9wz4Kfwmk2i2hPpK44j0AzQkyUAzn/RC3fsXGjjfLY+u1tD7p2zOY8Amc6KpI1MuHDn/xzO3/hxvkgG29t8JwKRsyeoPXuTP3Hs7+8zocth+I4I/NCZGEwyZH+GOAwRW/oMt7XohK8q7UtMBy9H7bU+JWEHQ7g1SPgp9G7dLg+HoZPTM+pdzZ2mnwRuRPndAqGuMxT3t2XryuOys/XBnNarg6GQZ1agMCUjvC2lxF7MKyKrwvq9v1bNR8/ZBzvBt5fay3ZGmNYIBplKY+GVdr8c6EQ6dGVvdG2uwHqyaqJXdBkfMRLGAYXBGhmRIvBIJx/jkjSMT5uSaNA9aVr2sDO8RGtuaioh3myw0bCwNPwwVdeVHmZR66eQPbkVki9GVhHCQMwKQihpqOTJQR1BQHpszWPUHOmbGCxgaQ7taeuLOoZ09JEVLJrXJmfEN0mQFllZS8aD3ya1RSUlW1xQMaUzVPghb/eQrLMBfXfzWi/uOEzU6Po8E5O0bPm5KPy9qQtZ0oj0swGHGURRxbsKrNYZaAhh6Y0f9jiA="
-
 language: java
 
 # Caching so the next build will be fast too.
@@ -66,7 +63,8 @@ script:
 
 deploy:
   provider: releases
-  api_key: $GITHUB_OAUTH_TOKEN
+  api_key:
+    secure: mQo0AO64DwVOsXQREG6fjtOickQffaPnSiMkoExPF2zRSAC/969os5YVrgS9AszGohdAEbN40nunaxmV9h95Gb6iUC7DWZkiyDS0xg8ChqJyF8vQVQcZxw5DtxaSKPexivkPsK6fi2Qhz0Rsgsx/2sPVV0EfZ8Kal97iBhqlz8S3n3mqAN0suEHymZND2iKWx6IJjOGKC9sAW915voBQ9M/m9VZwP95se36RuXOUsrG/hFOHj7thPHu0s9xCXZ8jYeUfrHbUngBPE5z33DUF+Qj0Ph3ac+Db5DlHTrgyxnkglFwrEBu3EVa8dijqRWOb/utzpvu/oX6s3lZhH+8lbPl4kP5VlU++aX0CHHJpI1on8AibJGEjF82xK7JlBX/EEz6/hxTpyAUSXDYWtHUgCojq1vpwfaUKp2eAmfUA8iAgcjUmGhT1ba10haZi1KHj0XzU7iNoFrSuiGoboufA46PGb74YlfhcrqV7aGjDU/NGLt1hu3dYVz1YcSNohIg5rxGbAX9bBpu/DEKIrOR73k19HzC4DJETW7gRYUrh+mLY1EMlGKPCyzxAs9Ij12KvYvqwPFdTR9ClobzqpvGv0jzqF/9TiR3bzbc5kdVbYIWa8Mjuw4NfrSvLyJyZHdNx68WdXKcxJwEsiovuVU7t+BKALEZ5TQ14VjyWDm7PsI0=
   file:
     - lightgbm4j-$LIGHTGBM_VERSION-$TRAVIS_OS_NAME-$TRAVIS_DIST.jar
     - lightgbm4j-$LIGHTGBM_VERSION-$TRAVIS_OS_NAME.jar
