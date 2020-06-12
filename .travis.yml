@@ -57,6 +57,7 @@ install:
     fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         brew install swig;
+		brew install https://raw.githubusercontent.com/Homebrew/homebrew-core/a3b64391ebace30b84de8e7997665a1621c0b2c0/Formula/cmake.rb;
     fi
 
 script:
