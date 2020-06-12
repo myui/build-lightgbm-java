@@ -4,8 +4,8 @@ env:
 
 # Run only for tagged commit
 branches:
-  except:
-  - master
+  only:
+  - "/^v[0-9\\.]+(-rc[0-9]+)?/"
 
 language: java
 
