@@ -21,13 +21,14 @@ matrix:
       group: deprecated-2017Q4
       jdk: openjdk7
     - os: osx
-      osx_image: xcode9.2
+      osx_image: xcode10
+
+# xcode10 use cmake version 3.12.2
 
 addons:
   homebrew:
     packages:
     - swig
-    - cmake
 
 notifications:
   email: false
