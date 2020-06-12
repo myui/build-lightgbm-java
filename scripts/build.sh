@@ -1,7 +1,7 @@
 export CXX=g++-5 CC=gcc-5
 export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 
-git clone --branch v${LIGHTGBM_VERSION} --depth 1 --recursive https://github.com/myui/LightGBM
+git clone --branch v${LIGHTGBM_VERSION} --depth 1 --recursive https://github.com/microsoft/LightGBM
 cd LightGBM
 
 mkdir build

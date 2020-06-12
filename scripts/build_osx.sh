@@ -1,6 +1,8 @@
-export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+# if [ -z "${JAVA_HOME+UNDEF}" ];then
+#   export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
+# fi
 
-git clone --branch v${LIGHTGBM_VERSION} --depth 1 --recursive https://github.com/myui/LightGBM
+git clone --branch v${LIGHTGBM_VERSION} --depth 1 --recursive https://github.com/microsoft/LightGBM
 cd LightGBM
 
 mkdir build
