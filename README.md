@@ -32,19 +32,22 @@ Compilied shared libraries (i.e., liblightgbm.dylib|so) are a portable one witho
 Minimum requirement for GLIBC is [2.15](https://abi-laboratory.pro/tracker/timeline/glibc/).
 
 ```sh
-lightgbm/src/main/resources/lib/liblightgbm.dylib:
-    @rpath/liblightgbm.dylib (compatibility version 0.0.0, current version 0.0.0)
-    @rpath/libjvm.dylib (compatibility version 1.0.0, current version 1.0.0)
-    /usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 120.1.0)
-    /usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1226.10.1)
+../lib_lightgbm.dylib:
+	@rpath/lib_lightgbm.dylib (compatibility version 0.0.0, current version 0.0.0)
+	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.50.4)
+../lib_lightgbm_swig.jnilib:
+	@rpath/lib_lightgbm.dylib (compatibility version 0.0.0, current version 0.0.0)
+	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
+	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.50.4)
 
-lightgbm/src/main/resources/lib/liblightgbm.so:
-	linux-vdso.so.1 =>  (0x00007ffe475bc000)
-	librt.so.1 => /lib/x86_64-linux-gnu/librt.so.1 (0x00007f1ca5f8d000)
-	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f1ca5c91000)
-	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f1ca5a74000)
-	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f1ca56b3000)
-	/lib64/ld-linux-x86-64.so.2 (0x00007f1ca681d000)
+
+	linux-vdso.so.1 =>  (0x00007ffc4f9bc000)
+	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f9f9a30b000)
+	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f9f9a0ee000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f9f99d2d000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007f9f9ab4a000)
+
 
 $ strings lightgbm/src/main/resources/lib/liblightgbm.so | grep ^GLIBC | sort
 GLIBC_2.14
@@ -71,9 +74,7 @@ mvn gpg:sign-and-deploy-file \
   -DpomFile=./lightgbm.pom \
   -DrepositoryId=sonatype-nexus-staging \
   -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ \
-  -Dfile=dist/lightgbm-${LIGHTGBM_VERSION}-rc${RC_NUMBER}.jar \
-  -Djavadoc=dist/lightgbm-${LIGHTGBM_VERSION}-rc${RC_NUMBER}-javadoc.jar \
-  -Dsources=dist/lightgbm-${LIGHTGBM_VERSION}-rc${RC_NUMBER}-sources.jar
+  -Dfile=dist/lightgbm-${LIGHTGBM_VERSION}-rc${RC_NUMBER}.jar
 ```
 
 ## Release from Staging
