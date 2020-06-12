@@ -88,7 +88,8 @@ mvn gpg:sign-and-deploy-file \
   -DpomFile=./lightgbm.pom \
   -DrepositoryId=sonatype-nexus-staging \
   -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ \
-  -Dfile=dist/lightgbm-${LIGHTGBM_VERSION}-rc${RC_NUMBER}.jar
+  -Dfile=dist/lightgbm-${LIGHTGBM_VERSION}-rc${RC_NUMBER}.jar \
+  -Dsources=dist/lightgbm-${LIGHTGBM_VERSION}-rc${RC_NUMBER}-sources.jar
 ```
 
 ## Release from Staging
