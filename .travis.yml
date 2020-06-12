@@ -47,14 +47,14 @@ before_install:
         sudo add-apt-repository -y ppa:git-core/ppa;
         sudo apt-get update;
     fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
+        # install cmake 3.12.4
+        brew install https://github.com/Homebrew/homebrew-core/raw/a3b64391ebace30b84de8e7997665a1621c0b2c0/Formula/cmake.rb
+    fi
 
 install:
   - if [[ "$TRAVIS_DIST" == "precise" ]]; then
         sudo apt-get install -y binutils git g++-5 make cmake cmake-data libpthread-stubs0-dev swig;
-    fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-        # install cmake 3.12.4
-        brew install https://github.com/Homebrew/homebrew-core/raw/a3b64391ebace30b84de8e7997665a1621c0b2c0/Formula/cmake.rb
     fi
 
 script:
