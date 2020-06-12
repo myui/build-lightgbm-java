@@ -71,7 +71,7 @@ deploy:
     - lightgbm4j-$LIGHTGBM_VERSION-$TRAVIS_OS_NAME-$TRAVIS_DIST.jar
     - lightgbm4j-$LIGHTGBM_VERSION-$TRAVIS_OS_NAME.jar
   on:
-    repo: myui/build-lightgbm-jvm
+    repo: myui/build-lightgbm-java
     tags: true
   skip_cleanup: true # do not delete the built assets
   overwrite: true
