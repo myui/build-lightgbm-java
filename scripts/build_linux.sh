@@ -10,7 +10,18 @@ cd build
 cmake -DUSE_SWIG=ON -DUSE_OPENMP=OFF -DCMAKE_CXX_FLAGS="-static-libgcc -static-libstdc++ -fvisibility=hidden" ..
 make -j4
 
+echo "Show information about lib_lightgbm.so ..."
 ldd ../lib_lightgbm.so 
 strings ../lib_lightgbm.so  | grep ^GLIBC | sort
+echo
+echo "Show information about lib_lightgbm_swig.so ..."
+ldd ../lib_lightgbm_swig.so
+strings ../lib_lightgbm_swig.so  | grep ^GLIBC | sort
+
+cp lightgbmlib.jar lightgbmlib-sources.jar
+mv java/*.java com/microsoft/ml/lightgbm/
+jar uf lightgbmlib-sources.jar com/microsoft/ml/lightgbm/*.java
+jar tf lightgbmlib-sources.jar
 
 mv lightgbmlib.jar $TRAVIS_BUILD_DIR/lightgbm-$LIGHTGBM_VERSION-$TRAVIS_OS_NAME-$TRAVIS_DIST.jar
+mv lightgbmlib-sources.jar $TRAVIS_BUILD_DIR/lightgbm-$LIGHTGBM_VERSION-sources.jar

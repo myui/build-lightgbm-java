@@ -24,39 +24,53 @@ This project publishes lightgbm to Maven central that contains portable binaries
 # Update shared library in jar
 
 ```sh
-jar uf lightgbm-2.3.1-rc1.jar dist/lib/liblightgbm.dylib
-jar tf lightgbm-2.3.1-rc1.jar | grep liblightgbm
+$ jar uf lightgbm-2.3.1-rc1.jar com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm.dylib
+$ jar uf lightgbm-2.3.1-rc1.jar com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm_swig.dylib
+
+$ jar tf lightgbm-2.3.1-rc1.jar | grep lib_lightgbm
+com/microsoft/ml/lightgbm/linux/x86_64/lib_lightgbm.so
+com/microsoft/ml/lightgbm/linux/x86_64/lib_lightgbm_swig.so
+com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm.dylib
+com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm_swig.dylib
 ```
 
 Compilied shared libraries (i.e., liblightgbm.dylib|so) are a portable one without dependencies to openmp and libc++ (for linux) as follows:
 Minimum requirement for GLIBC is [2.15](https://abi-laboratory.pro/tracker/timeline/glibc/).
 
 ```sh
-../lib_lightgbm.dylib:
+$ otool -L com/microsoft/ml/lightgbm/osx/x86_64/*.dylib
+
+com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm.dylib:
 	@rpath/lib_lightgbm.dylib (compatibility version 0.0.0, current version 0.0.0)
 	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
 	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.50.4)
-../lib_lightgbm_swig.jnilib:
+com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm_swig.dylib:
 	@rpath/lib_lightgbm.dylib (compatibility version 0.0.0, current version 0.0.0)
 	/usr/lib/libc++.1.dylib (compatibility version 1.0.0, current version 400.9.0)
 	/usr/lib/libSystem.B.dylib (compatibility version 1.0.0, current version 1252.50.4)
 
+$ ldd com/microsoft/ml/lightgbm/linux/x86_64/*.so
+com/microsoft/ml/lightgbm/linux/x86_64/lib_lightgbm.so:
+	linux-vdso.so.1 =>  (0x00007ffeec362000)
+	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007fb62c72d000)
+	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fb62c510000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fb62c14f000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007fb62cf6c000)
+com/microsoft/ml/lightgbm/linux/x86_64/lib_lightgbm_swig.so:
+	linux-vdso.so.1 =>  (0x00007ffe70bca000)
+	lib_lightgbm.so => not found
+	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007fd1ae051000)
+	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007fd1adc90000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007fd1ae482000)
 
-	linux-vdso.so.1 =>  (0x00007ffc4f9bc000)
-	libm.so.6 => /lib/x86_64-linux-gnu/libm.so.6 (0x00007f9f9a30b000)
-	libpthread.so.0 => /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f9f9a0ee000)
-	libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007f9f99d2d000)
-	/lib64/ld-linux-x86-64.so.2 (0x00007f9f9ab4a000)
-
-
-$ strings lightgbm/src/main/resources/lib/liblightgbm.so | grep ^GLIBC | sort
+$ strings com/microsoft/ml/lightgbm/linux/x86_64/*.so | grep ^GLIBC | sort | uniq
 GLIBC_2.14
 GLIBC_2.2.5
 GLIBC_2.3
 GLIBC_2.3.2
 GLIBC_2.3.4
 GLIBC_2.4
- ```
+```
  
 You can find requirements in your environment by `strings /lib/x86_64-linux-gnu/libc.so.6 | grep ^GLIBC | sort`.
 
