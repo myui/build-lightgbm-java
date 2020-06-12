@@ -21,7 +21,7 @@ matrix:
       group: deprecated-2017Q4
       jdk: openjdk7
     - os: osx
-      osx_image: xcode8
+      osx_image: xcode8.3
 
 addons:
   homebrew:
@@ -50,7 +50,7 @@ before_install:
 
 install:
   - if [[ "$TRAVIS_DIST" == "precise" ]]; then
-        sudo apt-get install -y binutils git g++-5 make cmake=3.3.2-1~precise3 cmake-data=3.3.2-1~precise3 libpthread-stubs0-dev swig;
+        sudo apt-get install -y binutils git g++-5 make cmake cmake-data libpthread-stubs0-dev swig;
     fi
 
 script:
