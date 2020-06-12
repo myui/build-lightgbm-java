@@ -24,7 +24,7 @@ This project publishes lightgbm to Maven central that contains portable binaries
 # Update shared library in jar
 
 ```sh
-jar uf lightgbm-2.3.1-rc1.jar lib/liblightgbm.dylib
+jar uf lightgbm-2.3.1-rc1.jar dist/lib/liblightgbm.dylib
 jar tf lightgbm-2.3.1-rc1.jar | grep liblightgbm
 ```
 

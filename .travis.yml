@@ -51,6 +51,7 @@ before_install:
     fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         brew analytics off;
+        brew install swig;
     fi
 
 install:
