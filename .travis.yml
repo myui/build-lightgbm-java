@@ -66,8 +66,8 @@ deploy:
   api_key:
     secure: mQo0AO64DwVOsXQREG6fjtOickQffaPnSiMkoExPF2zRSAC/969os5YVrgS9AszGohdAEbN40nunaxmV9h95Gb6iUC7DWZkiyDS0xg8ChqJyF8vQVQcZxw5DtxaSKPexivkPsK6fi2Qhz0Rsgsx/2sPVV0EfZ8Kal97iBhqlz8S3n3mqAN0suEHymZND2iKWx6IJjOGKC9sAW915voBQ9M/m9VZwP95se36RuXOUsrG/hFOHj7thPHu0s9xCXZ8jYeUfrHbUngBPE5z33DUF+Qj0Ph3ac+Db5DlHTrgyxnkglFwrEBu3EVa8dijqRWOb/utzpvu/oX6s3lZhH+8lbPl4kP5VlU++aX0CHHJpI1on8AibJGEjF82xK7JlBX/EEz6/hxTpyAUSXDYWtHUgCojq1vpwfaUKp2eAmfUA8iAgcjUmGhT1ba10haZi1KHj0XzU7iNoFrSuiGoboufA46PGb74YlfhcrqV7aGjDU/NGLt1hu3dYVz1YcSNohIg5rxGbAX9bBpu/DEKIrOR73k19HzC4DJETW7gRYUrh+mLY1EMlGKPCyzxAs9Ij12KvYvqwPFdTR9ClobzqpvGv0jzqF/9TiR3bzbc5kdVbYIWa8Mjuw4NfrSvLyJyZHdNx68WdXKcxJwEsiovuVU7t+BKALEZ5TQ14VjyWDm7PsI0=
   file:
-    - lightgbm4j-$LIGHTGBM_VERSION-$TRAVIS_OS_NAME-$TRAVIS_DIST.jar
-    - lightgbm4j-$LIGHTGBM_VERSION-$TRAVIS_OS_NAME.jar
+    - lightgbm-$LIGHTGBM_VERSION-$TRAVIS_OS_NAME-$TRAVIS_DIST.jar
+    - lightgbm-$LIGHTGBM_VERSION-$TRAVIS_OS_NAME.jar
   on:
     repo: myui/build-lightgbm-java
     tags: true
