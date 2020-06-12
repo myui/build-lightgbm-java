@@ -21,7 +21,11 @@ strings ../lib_lightgbm_swig.so  | grep ^GLIBC | sort
 cp lightgbmlib.jar lightgbmlib-sources.jar
 mv java/*.java com/microsoft/ml/lightgbm/
 jar uf lightgbmlib-sources.jar com/microsoft/ml/lightgbm/*.java
-jar tf lightgbmlib-sources.jar
+# jar tf lightgbmlib-sources.jar
+
+javadoc -classpath lightgbmlib-sources.jar -d javadoc com.microsoft.ml.lightgbm
+jar cvf lightgbmlib-javadoc.jar -C javadoc/ .
 
 mv lightgbmlib.jar $TRAVIS_BUILD_DIR/lightgbm-$LIGHTGBM_VERSION-$TRAVIS_OS_NAME-$TRAVIS_DIST.jar
 mv lightgbmlib-sources.jar $TRAVIS_BUILD_DIR/lightgbm-$LIGHTGBM_VERSION-sources.jar
+mv lightgbmlib-javadoc.jar $TRAVIS_BUILD_DIR/lightgbm-$LIGHTGBM_VERSION-javadoc.jar

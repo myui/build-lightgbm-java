@@ -75,6 +75,7 @@ deploy:
     - lightgbm-$LIGHTGBM_VERSION-$TRAVIS_OS_NAME-$TRAVIS_DIST.jar
     - lightgbm-$LIGHTGBM_VERSION-$TRAVIS_OS_NAME.jar
     - lightgbm-$LIGHTGBM_VERSION-sources.jar
+    - lightgbm-$LIGHTGBM_VERSION-javadoc.jar
   on:
     repo: myui/build-lightgbm-java
     tags: true
