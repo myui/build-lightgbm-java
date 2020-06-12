@@ -21,12 +21,13 @@ matrix:
       group: deprecated-2017Q4
       jdk: openjdk7
     - os: osx
-      osx_image: xcode9
+      osx_image: xcode9.2
 
 addons:
   homebrew:
     packages:
     - swig
+    - cmake
 
 notifications:
   email: false
@@ -54,9 +55,6 @@ before_install:
 install:
   - if [[ "$TRAVIS_DIST" == "precise" ]]; then
         sudo apt-get install -y binutils git g++-5 make cmake cmake-data libpthread-stubs0-dev swig;
-    fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-        brew install swig;
     fi
 
 script:
