@@ -59,7 +59,7 @@ install:
         brew install swig;
         # install cmake  3.12.4
         brew install https://github.com/Homebrew/homebrew-core/raw/a3b64391ebace30b84de8e7997665a1621c0b2c0/Formula/cmake.rb;
-	fi
+    fi
 
 script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
