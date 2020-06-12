@@ -14,4 +14,4 @@ make -j4
 otool -L ../lib_lightgbm.dylib 
 otool -L ../lib_lightgbm_swig.jnilib 
 
-mv lightgbmlib.jar $TRAVIS_BUILD_DIR/lightgbm-$LIGHTGBM_VERSION-$TRAVIS_OS_NAME-$TRAVIS_DIST.jar
+mv lightgbmlib.jar $TRAVIS_BUILD_DIR/lightgbm-$LIGHTGBM_VERSION-$TRAVIS_OS_NAME.jar
