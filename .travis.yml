@@ -22,7 +22,7 @@ matrix:
       jdk: openjdk7
     - os: osx
       osx_image: xcode10
-      jdk: openjdk10
+      jdk: openjdk11
 
 # xcode10 use cmake version 3.12.2, macOS 10.13, JDK 10.0.2+13
 
