@@ -1,7 +1,7 @@
-# build-lightgbm-jvm
-[![Build Status](https://travis-ci.org/myui/build-lightgbm-jvm.svg?branch=master)](https://travis-ci.org/myui/build-lightgbm-jvm) 
+# build-lightgbm-java
+[![Build Status](https://travis-ci.org/myui/build-lightgbm-java.svg?branch=master)](https://travis-ci.org/myui/build-lightgbm-java) 
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/io.github.myui/lightgbm/badge.svg)](https://search.maven.org/#search%7Cga%7C1%7Cg%3A%22io.github.myui%22%20a%3Alightgbm) 
-[![License](http://img.shields.io/:license-Apache_v2-blue.svg)](https://github.com/myui/build-lightgbm-jvm/blob/master/LICENSE)
+[![License](http://img.shields.io/:license-Apache_v2-blue.svg)](https://github.com/myui/build-lightgbm-java/blob/master/LICENSE)
 
 Repository to build Java LightGBM package for Linux/MacOSX. 
 
