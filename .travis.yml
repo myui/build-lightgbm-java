@@ -67,10 +67,10 @@ install:
 
 script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-        sh scripts/build_osx.sh;
+        LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION` sh scripts/build_osx.sh;
     fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        CC=`which gcc-5` CXX=`which g++-5` sh scripts/build_linux.sh;
+        CC=`which gcc-5` CXX=`which g++-5` LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION` sh scripts/build_linux.sh;
     fi
 
 deploy:
