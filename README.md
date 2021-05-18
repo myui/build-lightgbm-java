@@ -15,7 +15,7 @@ This project publishes lightgbm to Maven central that contains portable binaries
 <dependency>
     <groupId>io.github.myui</groupId>
     <artifactId>lightgbm</artifactId>
-    <version>2.3.1-rc1</version>
+    <version>3.2.1-rc1</version>
 </dependency>
 ```
 
@@ -24,10 +24,10 @@ This project publishes lightgbm to Maven central that contains portable binaries
 # Update shared library in jar
 
 ```sh
-$ jar uf lightgbm-2.3.1-rc1.jar com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm.dylib
-$ jar uf lightgbm-2.3.1-rc1.jar com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm_swig.dylib
+$ jar uf lightgbm-3.2.1-rc1.jar com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm.dylib
+$ jar uf lightgbm-3.2.1-rc1.jar com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm_swig.dylib
 
-$ jar tf lightgbm-2.3.1-rc1.jar | grep lib_lightgbm
+$ jar tf lightgbm-3.2.1-rc1.jar | grep lib_lightgbm
 com/microsoft/ml/lightgbm/linux/x86_64/lib_lightgbm.so
 com/microsoft/ml/lightgbm/linux/x86_64/lib_lightgbm_swig.so
 com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm.dylib
@@ -80,7 +80,7 @@ You can find requirements in your environment by `strings /lib/x86_64-linux-gnu/
 
 ```sh
 export NEXUS_PASSWD=xxxx
-export LIGHTGBM_VERSION=2.3.1
+export LIGHTGBM_VERSION=3.2.1
 export RC_NUMBER=1
 
 mvn gpg:sign-and-deploy-file \

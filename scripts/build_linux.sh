@@ -1,6 +1,8 @@
 # export CXX=g++-5 CC=gcc-5
 # export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 
+export LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION`
+
 git clone --branch v${LIGHTGBM_VERSION} --depth 1 --recursive https://github.com/microsoft/LightGBM
 cd LightGBM
 
