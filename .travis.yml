@@ -63,6 +63,7 @@ before_install:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         export HOMEBREW_NO_AUTO_UPDATE=1;
         brew analytics off;
+        brew update;
         brew upgrade cmake;
     fi
 # CMake 3.16 or higher is required.  You are running version 3.15.5
