@@ -62,8 +62,8 @@ before_install:
     fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
         wget https://cmake.org/files/v3.16/cmake-3.16.9-Darwin-x86_64.tar.gz;
-        tar xzf cmake-3.16.9-Darwin-x86_64.tar.gz
-        export PATH="`pwd`/cmake-3.16.9-Darwin-x86_64/CMake.app/Contents/bin:$PATH"
+        tar xzf cmake-3.16.9-Darwin-x86_64.tar.gz;
+        export PATH="`pwd`/cmake-3.16.9-Darwin-x86_64/CMake.app/Contents/bin:$PATH";
     fi
 # CMake 3.16 or higher is required.  You are running version 3.15.5
 
