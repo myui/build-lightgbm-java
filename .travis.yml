@@ -1,6 +1,6 @@
 env:
   global:
-   - LIGHTGBM_VERSION=2.3.1
+   - LIGHTGBM_VERSION=3.2.1
 
 # Run only for tagged commit
 branches:
@@ -21,7 +21,7 @@ matrix:
   include:
     - os: linux
       sudo: false
-      dist: precise
+      dist: trusty
       group: deprecated-2017Q4
       jdk: openjdk7
     - os: osx
@@ -35,17 +35,23 @@ notifications:
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
+        sudo ls -al /etc/apt/sources.list.d/;
         sudo apt-get remove -y --purge mongodb;
         sudo rm /etc/apt/sources.list.d/mongodb.list;
+        sudo apt-get remove -y --purge cassandra;
+        sudo rm /etc/apt/sources.list.d/cassandra.list;
+        sudo apt-get remove -y --purge couchdb;
+        sudo rm /etc/apt/sources.list.d/couchdb.list;
+        sudo apt-get remove -y --purge pgdg;
+        sudo rm /etc/apt/sources.list.d/pgdg.list;
         sudo apt-get update;
         sudo apt-get -y install software-properties-common python-software-properties;
         sudo add-apt-repository -y ppa:roblib/ppa;
         sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;
         sudo apt-get update;
     fi
-  - if [[ "$TRAVIS_DIST" == "precise" ]]; then
+  - if [[ "$TRAVIS_DIST" == "trusty" ]]; then
         sudo apt-get update;
-        sudo add-apt-repository -y ppa:george-edison55/precise-backports;
         sudo add-apt-repository -y ppa:git-core/ppa;
         sudo apt-get update;
     fi
@@ -55,16 +61,16 @@ before_install:
     fi
 
 install:
-  - if [[ "$TRAVIS_DIST" == "precise" ]]; then
-        sudo apt-get install -y binutils git g++-5 make cmake cmake-data libpthread-stubs0-dev swig;
+  - if [[ "$TRAVIS_DIST" == "trusty" ]]; then
+        sudo apt-get install -y binutils git g++-5 make cmake3 cmake3-data libpthread-stubs0-dev swig3.0;
     fi
 
 script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-        sh scripts/build_osx.sh;
+        LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION` sh scripts/build_osx.sh;
     fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        CC=`which gcc-5` CXX=`which g++-5` sh scripts/build_linux.sh;
+        CC=`which gcc-5` CXX=`which g++-5` LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION` sh scripts/build_linux.sh;
     fi
 
 deploy:

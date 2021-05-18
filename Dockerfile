@@ -17,13 +17,12 @@
 # under the License.
 #
 
-FROM ubuntu:precise
+FROM ubuntu:trusty
 MAINTAINER Makoto Yui <myui@apache.org>
-
-ENV LIGHTGBM_VERSION=2.3.1
 
 WORKDIR /work
 
+COPY LIGHTGBM_VERSION .
 COPY ./scripts/build.sh .
 
 RUN set -eux && \
@@ -31,10 +30,9 @@ RUN set -eux && \
     apt-get install -y software-properties-common python-software-properties && \
 	add-apt-repository -y ppa:roblib/ppa && \
 	add-apt-repository -y ppa:git-core/ppa && \
-	add-apt-repository -y ppa:george-edison55/precise-backports && \
 	add-apt-repository -y ppa:ubuntu-toolchain-r/test && \
 	apt-get update && \
-	apt-get install -y vim maven wget binutils git g++-5 openjdk-7-jdk make cmake libpthread-stubs0-dev swig && \
+	apt-get install -y vim maven wget binutils git g++-5 openjdk-7-jdk make cmake3 libpthread-stubs0-dev swig3.0 && \
 	export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64 && \
 	update-alternatives --install `which java` java ${JAVA_HOME}/bin/java 1062 && \
 	rm -rf /var/cache/apt/archives/* /var/lib/apt/lists/* /root/.m2/*

@@ -2,6 +2,8 @@
 #   export JAVA_HOME=`/usr/libexec/java_home -v 1.7`
 # fi
 
+# export LIGHTGBM_VERSION=3.2.1
+
 git clone --branch v${LIGHTGBM_VERSION} --depth 1 --recursive https://github.com/microsoft/LightGBM
 cd LightGBM
 
