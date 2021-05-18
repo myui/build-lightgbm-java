@@ -44,7 +44,7 @@ before_install:
         sudo rm /etc/apt/sources.list.d/couchdb.list;
         sudo apt-get remove -y --purge postgresql;
         sudo rm /etc/apt/sources.list.d/postgresql.list;
-		sudo apt-get update;
+        sudo apt-get update;
         sudo apt-get -y install software-properties-common python-software-properties;
         sudo add-apt-repository -y ppa:roblib/ppa;
         sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test;
