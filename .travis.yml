@@ -54,7 +54,7 @@ before_install:
     fi
 
 install:
-  - if [[ "$TRAVIS_DIST" == "precise" ]]; then
+  - if [[ "$TRAVIS_DIST" == "trusty" ]]; then
         sudo apt-get install -y binutils git g++-5 make cmake3 cmake-data libpthread-stubs0-dev swig3.0;
     fi
 
