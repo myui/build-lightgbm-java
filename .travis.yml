@@ -30,6 +30,12 @@ matrix:
 
 # xcode10 use cmake version 3.12.2, macOS 10.13, JDK 10.0.2+13
 
+addons:
+  homebrew:
+    packages:
+    - swig
+    update: false
+
 notifications:
   email: false
 
@@ -53,10 +59,6 @@ before_install:
         sudo apt-get update;
         sudo add-apt-repository -y ppa:git-core/ppa;
         sudo apt-get update;
-    fi
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
-        brew analytics off;
-        brew install swig;
     fi
 
 install:
