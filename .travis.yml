@@ -35,7 +35,6 @@ notifications:
 
 before_install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then
-        sudo ls -al /etc/apt/sources.list.d/;
         sudo apt-get remove -y --purge mongodb;
         sudo rm /etc/apt/sources.list.d/mongodb.list;
         sudo apt-get remove -y --purge cassandra;
