@@ -1,6 +1,6 @@
 env:
   global:
-   - LIGHTGBM_VERSION=2.3.1
+   - LIGHTGBM_VERSION=3.2.1
 
 # Run only for tagged commit
 branches:
@@ -53,7 +53,7 @@ before_install:
 
 install:
   - if [[ "$TRAVIS_DIST" == "trusty" ]]; then
-        sudo apt-get install -y binutils git g++-5 make cmake3 cmake-data libpthread-stubs0-dev swig3.0;
+        sudo apt-get install -y binutils git g++-5 make cmake3 cmake3-data libpthread-stubs0-dev swig3.0;
     fi
 
 script:
