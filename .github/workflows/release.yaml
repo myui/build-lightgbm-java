@@ -6,10 +6,29 @@ on:
       - 'v[0-9]+.[0-9]+*'
 
 jobs:
-  build_on_ubuntu:
+  create_release:
+    name: Create Github release
     runs-on: ubuntu-latest
-    container: 
+    outputs:
+      upload_url: ${{ steps.create_release.outputs.upload_url }}
+    steps:
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+
+  build_on_ubuntu:
+    name: Build artifacts for Linux
+    runs-on: ubuntu-latest
+    container:
       image: ubuntu:trusty
+    needs: create_release
     steps:
       - name: checkout github repository
         uses: actions/checkout@v2
@@ -25,21 +44,30 @@ jobs:
         run: |
           export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
           CC=`which gcc-5` CXX=`which g++-5` LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION` sh scripts/build_linux.sh
-      - name: Create Release
-        id: create_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          draft: false
-          prerelease: false
       - name: Upload Release Assets
         id: upload-release-assets
         uses: dwenegar/upload-release-assets@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
         with:
-          release_id: ${{ steps.create_release.outputs.id }}
-          asset_path: ./LightGBM/build/assets
+          release_id: ${{ needs.create_release.outputs.upload_url }}
+          assets_path: ./LightGBM/build/assets
+
+  build_on_osx:
+    name: Build artifacts for Mac OSX
+    runs-on: macos-latest # macos-10.15
+    needs: create_release
+    steps:
+      - name: checkout github repository
+        uses: actions/checkout@v2
+      - name: build artifacts
+        run: |
+          LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION` sh scripts/build_osx.sh;e
+      - name: Upload Release Assets
+        id: upload-release-assets
+        uses: dwenegar/upload-release-assets@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
+        with:
+          release_id: ${{ needs.create_release.outputs.upload_url }}
+          assets_path: ./LightGBM/build/assets
