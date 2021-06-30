@@ -83,7 +83,6 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 1.8
-          distribution: 'adopt'
           server-id: github
           settings-path: ${{ github.workspace }}
       - name: Cache local Maven repository
@@ -97,7 +96,7 @@ jobs:
         run: |
           NEW_VERSION=`echo ${{ github.ref }} || sed -e 's/^v//'`
           mvn versions:set -f lightgbm.pom -DnewVersion=${NEW_VERSION} -DgenerateBackupPoms=false
-          mvn gpg:sign-and-deploy-file -s ./gh-settings.xml \
+          mvn gpg:1.6:sign-and-deploy-file -s ./gh-settings.xml \
             -Dgpg.executable="./scripts/gpghack.sh" \
             -DpomFile=./lightgbm.pom \
             -DrepositoryId=github \
