@@ -1,7 +1,17 @@
+#!/usr/bin/env bash
+
+# Exit script if you try to use an uninitialized variable.
+set -o nounset
+# Exit script if a statement returns a non-true return value.
+set -o errexit
+
 # export CXX=g++-5 CC=gcc-5
 # export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
 
-# export LIGHTGBM_VERSION=3.2.1
+if [ "$LIGHTGBM_VERSION" = "" ]; then
+  SCRIPT_DIR=`dirname $(readlink -f $0)`
+  LIGHTGBM_VERSION=`cat $SCRIPT_DIR/../LIGHTGBM_VERSION`
+fi
 
 git clone --branch v${LIGHTGBM_VERSION} --depth 1 --recursive https://github.com/microsoft/LightGBM
 cd LightGBM
@@ -28,6 +38,7 @@ jar uf lightgbmlib-sources.jar com/microsoft/ml/lightgbm/*.java
 javadoc -classpath lightgbmlib-sources.jar -d javadoc com.microsoft.ml.lightgbm
 jar cvf lightgbmlib-javadoc.jar -C javadoc/ .
 
-mv lightgbmlib.jar $TRAVIS_BUILD_DIR/lightgbm-$LIGHTGBM_VERSION-$TRAVIS_OS_NAME-$TRAVIS_DIST.jar
-mv lightgbmlib-sources.jar $TRAVIS_BUILD_DIR/lightgbm-$LIGHTGBM_VERSION-sources.jar
-mv lightgbmlib-javadoc.jar $TRAVIS_BUILD_DIR/lightgbm-$LIGHTGBM_VERSION-javadoc.jar
+mkdir -p assets
+mv lightgbmlib.jar assets/lightgbm-$LIGHTGBM_VERSION-linux.jar
+mv lightgbmlib-sources.jar assets/lightgbm-$LIGHTGBM_VERSION-sources.jar
+mv lightgbmlib-javadoc.jar assets/lightgbm-$LIGHTGBM_VERSION-javadoc.jar
