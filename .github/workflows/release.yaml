@@ -86,7 +86,7 @@ jobs:
           distribution: 'adopt'
           server-id: github
           settings-path: ${{ github.workspace }}
-    - name: Publish to GitHub Packages Apache Maven
+      - name: Publish to GitHub Packages Apache Maven
         run: |
           NEW_VERSION=`echo ${{ github.ref }} || sed -e 's/^v//'
           mvn versions:set -f lightgbm.pom -DnewVersion=${NEW_VERSION} -DgenerateBackupPoms=false
