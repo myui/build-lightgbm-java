@@ -1,0 +1,45 @@
+name: Build artifacts
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+*'
+
+jobs:
+  build_on_ubuntu:
+    runs-on: ubuntu-latest
+    container: 
+      image: ubuntu:trusty
+    steps:
+      - name: checkout github repository
+        uses: actions/checkout@v2
+      - name: install prerequisites
+        run: |
+          apt-get update
+          apt-get --no-install-recommends -y install software-properties-common python-software-properties
+          add-apt-repository -y ppa:roblib/ppa
+          add-apt-repository -y ppa:ubuntu-toolchain-r/test
+          apt-get update
+          apt-get install --no-install-recommends -y binutils git g++-5 make cmake3 cmake3-data libpthread-stubs0-dev swig3.0 openjdk-7-jdk
+      - name: build artifacts
+        run: |
+          export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
+          CC=`which gcc-5` CXX=`which g++-5` LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION` sh scripts/build_linux.sh
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Assets
+        id: upload-release-assets
+        uses: dwenegar/upload-release-assets@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
+        with:
+          release_id: ${{ steps.create_release.outputs.id }}
+          asset_path: ./LightGBM/build/assets
