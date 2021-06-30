@@ -10,7 +10,7 @@ jobs:
     name: Create Github release
     runs-on: ubuntu-latest
     outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
+      release_id: ${{ steps.create_release.outputs.id }}
     steps:
       - name: Create release
         id: create_release
@@ -30,7 +30,7 @@ jobs:
       image: ubuntu:trusty
     needs: create_release
     steps:
-      - name: checkout github repository
+      - name: checkout Github repository
         uses: actions/checkout@v2
       - name: install prerequisites
         run: |
@@ -50,7 +50,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
         with:
-          release_id: ${{ needs.create_release.outputs.upload_url }}
+          release_id: ${{ needs.create_release.outputs.release_id }}
           assets_path: ./LightGBM/build/assets
 
   build_on_osx:
@@ -58,16 +58,44 @@ jobs:
     runs-on: macos-latest # macos-10.15
     needs: create_release
     steps:
-      - name: checkout github repository
+      - name: checkout Github repository
         uses: actions/checkout@v2
       - name: build artifacts
         run: |
-          LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION` sh scripts/build_osx.sh;e
+          LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION` sh scripts/build_osx.sh
       - name: Upload Release Assets
         id: upload-release-assets
         uses: dwenegar/upload-release-assets@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
         with:
-          release_id: ${{ needs.create_release.outputs.upload_url }}
+          release_id: ${{ needs.create_release.outputs.release_id }}
           assets_path: ./LightGBM/build/assets
+
+  publish_mvn_package:
+    name: Public Maven packages to Github Packages
+    runs-on: ubuntu-latest
+    needs: [build_on_ubuntu, build_on_osx]
+    steps:
+      - name: checkout Github repository
+        uses: actions/checkout@v2
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+          distribution: 'adopt'
+          server-id: github
+          settings-path: ${{ github.workspace }}
+      - name: Publish to GitHub Packages Apache Maven
+        run: |
+          NEW_VERSION=`echo ${{ github.ref }} || sed -e 's/^v//'
+          mvn versions:set -f lightgbm.pom -DnewVersion=${NEW_VERSION} -DgenerateBackupPoms=false
+          mvn gpg:sign-and-deploy-file -s ./gh-settings.xml \
+            -DpomFile=./lightgbm.pom \
+            -DrepositoryId=github \
+            -Durl=https://maven.pkg.github.com/myui/build-lightgbm-java \
+            -Dfile=dist/lightgbm-${{ github.ref }}.jar \
+            -Dsources=dist/lightgbm-${{ github.ref }}-sources.jar \
+            -Djavadoc=dist/lightgbm-${{ github.ref }}-javadoc.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions

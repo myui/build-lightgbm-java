@@ -23,8 +23,8 @@ cd build
 cmake -DUSE_SWIG=ON -DUSE_OPENMP=OFF -DAPPLE_OUTPUT_DYLIB=ON ..
 make -j4
 
-otool -L ../lib_lightgbm.dylib 
-otool -L ../lib_lightgbm_swig.jnilib 
+otool -L ../lib_lightgbm.dylib
+otool -L ../lib_lightgbm_swig.jnilib
 
 mkdir -p assets
 mv lightgbmlib.jar assets/lightgbm-$LIGHTGBM_VERSION-osx.jar

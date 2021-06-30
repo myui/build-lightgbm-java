@@ -3,7 +3,7 @@
 
  <groupId>io.github.myui</groupId>
  <artifactId>lightgbm</artifactId>
- <version>3.2.1-rc1</version>
+ <version>3.2.1-rc6</version>
  <packaging>jar</packaging>
 
  <name>lightgbm</name>
@@ -34,9 +34,16 @@
    <id>sonatype-nexus-snapshots</id>
    <url>https://oss.sonatype.org/content/repositories/snapshots</url>
   </snapshotRepository>
+<!--
   <repository>
    <id>sonatype-nexus-staging</id>
    <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+  </repository>
+-->
+  <repository>
+    <id>github</id>
+    <name>GitHub Packages for io.github.myui.lightgbm</name>
+    <url>https://maven.pkg.github.com/myui/build-lightgbm-java</url>
   </repository>
  </distributionManagement>
 
