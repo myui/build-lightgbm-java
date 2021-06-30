@@ -8,7 +8,7 @@ on:
 jobs:
   build_on_ubuntu:
     runs-on: ubuntu-latest
-    container: 
+    container:
       image: ubuntu:trusty
     steps:
       - name: checkout github repository
@@ -42,4 +42,4 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
         with:
           release_id: ${{ steps.create_release.outputs.id }}
-          asset_path: ./LightGBM/build/assets
+          assets_path: ./LightGBM/build/assets
