@@ -96,7 +96,7 @@ jobs:
         run: |
           NEW_VERSION=`echo ${{ github.ref }} || sed -e 's/^v//'`
           mvn versions:set -f lightgbm.pom -DnewVersion=${NEW_VERSION} -DgenerateBackupPoms=false
-          mvn gpg:1.6:sign-and-deploy-file -s ./gh-settings.xml \
+          mvn org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file -s ./gh-settings.xml \
             -Dgpg.executable="./scripts/gpghack.sh" \
             -DpomFile=./lightgbm.pom \
             -DrepositoryId=github \
