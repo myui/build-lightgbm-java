@@ -10,7 +10,7 @@ jobs:
     name: Create Github release
     runs-on: ubuntu-latest
     outputs:
-      upload_url: ${{ steps.create_release.outputs.upload_url }}
+      release_id: ${{ steps.create_release.outputs.id }}
     steps:
       - name: Create release
         id: create_release
@@ -50,7 +50,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
         with:
-          release_id: ${{ needs.create_release.outputs.upload_url }}
+          release_id: ${{ needs.create_release.outputs.release_id }}
           assets_path: ./LightGBM/build/assets
 
   build_on_osx:
@@ -62,12 +62,12 @@ jobs:
         uses: actions/checkout@v2
       - name: build artifacts
         run: |
-          LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION` sh scripts/build_osx.sh;e
+          LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION` sh scripts/build_osx.sh
       - name: Upload Release Assets
         id: upload-release-assets
         uses: dwenegar/upload-release-assets@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
         with:
-          release_id: ${{ needs.create_release.outputs.upload_url }}
+          release_id: ${{ needs.create_release.outputs.release_id }}
           assets_path: ./LightGBM/build/assets
