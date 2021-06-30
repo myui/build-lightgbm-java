@@ -86,11 +86,19 @@ jobs:
           distribution: 'adopt'
           server-id: github
           settings-path: ${{ github.workspace }}
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       - name: Publish to GitHub Packages Apache Maven
         run: |
           NEW_VERSION=`echo ${{ github.ref }} || sed -e 's/^v//'`
           mvn versions:set -f lightgbm.pom -DnewVersion=${NEW_VERSION} -DgenerateBackupPoms=false
           mvn gpg:sign-and-deploy-file -s ./gh-settings.xml \
+            -Dgpg.executable="./scripts/gpghack.sh" \
             -DpomFile=./lightgbm.pom \
             -DrepositoryId=github \
             -Durl=https://maven.pkg.github.com/myui/build-lightgbm-java \
