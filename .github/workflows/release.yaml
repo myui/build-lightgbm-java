@@ -44,6 +44,11 @@ jobs:
         run: |
           export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-amd64
           CC=`which gcc-5` CXX=`which g++-5` LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION` sh scripts/build_linux.sh
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: ./LightGBM/build/lightgbm-*.jar
       - name: Upload Release Assets
         id: upload-release-assets
         uses: dwenegar/upload-release-assets@v1
@@ -63,6 +68,11 @@ jobs:
       - name: build artifacts
         run: |
           LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION` sh scripts/build_osx.sh
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: ./LightGBM/lib_lightgbm.*.dylib
       - name: Upload Release Assets
         id: upload-release-assets
         uses: dwenegar/upload-release-assets@v1
@@ -92,17 +102,34 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: my-artifact
+          path: assets
+      - name: Update jar to include OSX native libraries
+        run: |
+          LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION`
+          TAG_VERSION=`echo ${{ github.ref }} || sed -e 's/^v//'`
+          cd assets; ls assets
+          mv lightgbm-${LIGHTGBM_VERSION}.jar lightgbm-${TAG_VERSION}.jar
+          mkdir -p com/microsoft/ml/lightgbm/osx/x86_64
+          mv lib_lightgbm.*.dylib com/microsoft/ml/lightgbm/osx/x86_64
+          jar uf lightgbm-${TAG_VERSION}.jar com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm.dylib
+          jar uf lightgbm-${TAG_VERSION}.jar com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm_swig.dylib
+          jar tf lightgbm-${TAG_VERSION}.jar | grep lib_lightgbm
+          cd ..
       - name: Publish to GitHub Packages Apache Maven
         run: |
-          NEW_VERSION=`echo ${{ github.ref }} || sed -e 's/^v//'`
-          mvn versions:set -f lightgbm.pom -DnewVersion=${NEW_VERSION} -DgenerateBackupPoms=false
-          mvn org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file -s ./gh-settings.xml \
-            -Dgpg.executable="./scripts/gpghack.sh" \
-            -DpomFile=./lightgbm.pom \
+          TAG_VERSION=`echo ${{ github.ref }} || sed -e 's/^v//'`
+          mvn versions:set -f lightgbm.pom -DnewVersion=${TAG_VERSION} -DgenerateBackupPoms=false
+          mvn org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file -s gh-settings.xml \
+            -Dgpg.executable=scripts/gpghack.sh \
+            -DpomFile=lightgbm.pom \
             -DrepositoryId=github \
             -Durl=https://maven.pkg.github.com/myui/build-lightgbm-java \
-            -Dfile=dist/lightgbm-${{ github.ref }}.jar \
-            -Dsources=dist/lightgbm-${{ github.ref }}-sources.jar \
-            -Djavadoc=dist/lightgbm-${{ github.ref }}-javadoc.jar
+            -Dfile=assets/lightgbm-${TAG_VERSION}.jar \
+            -Dsources=assets/lightgbm-${TAG_VERSION}-sources.jar \
+            -Djavadoc=assets/lightgbm-${TAG_VERSION}-javadoc.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
