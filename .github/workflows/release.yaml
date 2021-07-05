@@ -111,7 +111,7 @@ jobs:
         run: |
           LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION`
           TAG_VERSION=`echo ${{ github.ref }} || sed -e 's/^v//'`
-          pwd; ls; cd assets; ls assets
+          cd assets
           mv lightgbm-${LIGHTGBM_VERSION}.jar lightgbm-${TAG_VERSION}.jar
           mkdir -p com/microsoft/ml/lightgbm/osx/x86_64
           mv lib_lightgbm.*.dylib com/microsoft/ml/lightgbm/osx/x86_64
