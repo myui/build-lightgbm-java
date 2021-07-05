@@ -110,7 +110,7 @@ jobs:
       - name: Update jar to include OSX native libraries
         run: |
           LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION`
-          TAG_VERSION=`echo ${{ github.ref }} || sed -e 's/^v//'`
+          TAG_VERSION=`echo ${{ github.ref }} || sed -e 's|^refs/tags/v||g`
           cd assets
           mv lightgbm-${LIGHTGBM_VERSION}.jar lightgbm-${TAG_VERSION}.jar
           mkdir -p com/microsoft/ml/lightgbm/osx/x86_64
@@ -121,7 +121,7 @@ jobs:
           cd ..
       - name: Publish to GitHub Packages Apache Maven
         run: |
-          TAG_VERSION=`echo ${{ github.ref }} || sed -e 's/^v//'`
+          TAG_VERSION=`echo ${{ github.ref }} || sed -e 's|^refs/tags/v||g`
           mvn versions:set -f lightgbm.pom -DnewVersion=${TAG_VERSION} -DgenerateBackupPoms=false
           mvn org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file -s gh-settings.xml \
             -Dgpg.executable=scripts/gpghack.sh \
