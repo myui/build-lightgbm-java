@@ -27,5 +27,8 @@ otool -L ../lib_lightgbm.dylib
 otool -L ../lib_lightgbm_swig.jnilib
 
 mkdir -p assets
-mv ../lib_lightgbm.dylib ../lib_lightgbm_swig.jnilib ./assets
+mv ../lib_lightgbm.dylib ./assets
+# https://github.com/microsoft/LightGBM/issues/1326#issuecomment-430096897
+mv ../lib_lightgbm_swig.jnilib ./assets/lib_lightgbm_swig.dylib
+
 mv lightgbmlib.jar assets/lightgbm-$LIGHTGBM_VERSION-osx.jar

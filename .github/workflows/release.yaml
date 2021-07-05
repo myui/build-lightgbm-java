@@ -114,7 +114,7 @@ jobs:
           cd assets; ls
           mv lightgbm-${LIGHTGBM_VERSION}.jar lightgbm-${TAG_VERSION}.jar
           mkdir -p com/microsoft/ml/lightgbm/osx/x86_64
-          mv lib_lightgbm.*.dylib com/microsoft/ml/lightgbm/osx/x86_64
+          mv lib_lightgbm.dylib lib_lightgbm_swig.dylib com/microsoft/ml/lightgbm/osx/x86_64
           jar uf lightgbm-${TAG_VERSION}.jar com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm.dylib
           jar uf lightgbm-${TAG_VERSION}.jar com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm_swig.dylib
           jar tf lightgbm-${TAG_VERSION}.jar | grep lib_lightgbm
