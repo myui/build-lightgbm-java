@@ -72,7 +72,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: my-artifact
-          path: ./LightGBM/lib_lightgbm.*.dylib
+          path: ./LightGBM/build/lib_lightgbm.*.dylib
       - name: Upload Release Assets
         id: upload-release-assets
         uses: dwenegar/upload-release-assets@v1
