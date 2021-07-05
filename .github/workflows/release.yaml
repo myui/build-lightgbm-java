@@ -72,9 +72,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: my-artifact
-          path: |
-            ./LightGBM/lib_lightgbm.dylib
-            ./LightGBM/lib_lightgbm_swig.dylib
+          path: ./LightGBM/build/assets
       - name: Upload Release Assets
         id: upload-release-assets
         uses: dwenegar/upload-release-assets@v1
@@ -113,7 +111,7 @@ jobs:
         run: |
           LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION`
           TAG_VERSION=`echo ${{ github.ref }} | sed -r 's|^refs/tags/v(.*)|\1|'`
-          cd assets
+          cd assets; ls
           mv lightgbm-${LIGHTGBM_VERSION}.jar lightgbm-${TAG_VERSION}.jar
           mkdir -p com/microsoft/ml/lightgbm/osx/x86_64
           mv lib_lightgbm.*.dylib com/microsoft/ml/lightgbm/osx/x86_64
