@@ -39,7 +39,7 @@ javadoc -classpath lightgbmlib-sources.jar -d javadoc com.microsoft.ml.lightgbm
 jar cvf lightgbmlib-javadoc.jar -C javadoc/ .
 
 mkdir -p assets
-mv lightgbmlib.jar assets/lightgbm-$LIGHTGBM_VERSION-linux.jar
+mv lightgbmlib.jar assets/lightgbm-$LIGHTGBM_VERSION.jar
 mv lightgbmlib-sources.jar assets/lightgbm-$LIGHTGBM_VERSION-sources.jar
 mv lightgbmlib-javadoc.jar assets/lightgbm-$LIGHTGBM_VERSION-javadoc.jar
 ls -al assets/
