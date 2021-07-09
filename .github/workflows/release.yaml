@@ -128,7 +128,10 @@ jobs:
         run: |
           TAG_VERSION=`echo ${{ github.ref }} | sed -r 's|^refs/tags/v(.*)|\1|'`
           mvn versions:set -f lightgbm.pom -DnewVersion=${TAG_VERSION} -DgenerateBackupPoms=false
-          script -e -c "mvn --batch-mode --no-transfer-progress org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file \
+          gpg --version
+          gpg --help
+		  which gpg2
+          script -q -e -c "mvn --batch-mode --no-transfer-progress org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file \
             -s gh-settings.xml \
             -Dgpg.executable=scripts/gpghack.sh \
             -DpomFile=lightgbm.pom \

@@ -1,1 +1,1 @@
-gpg --batch --no-tty --no-use-agent "$@"
+gpg --batch --no-tty --pinentry-mode loopback "$@"
