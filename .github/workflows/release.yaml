@@ -124,13 +124,11 @@ jobs:
           jar uf lightgbm-${TAG_VERSION}.jar com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm_swig.dylib
           jar tf lightgbm-${TAG_VERSION}.jar | grep lib_lightgbm
           cd ..
-      - name: Setup faketty
-        uses: Yuri6037/Action-FakeTTY@v1.1
       - name: Publish to GitHub Packages Apache Maven
         run: |
           TAG_VERSION=`echo ${{ github.ref }} | sed -r 's|^refs/tags/v(.*)|\1|'`
           mvn versions:set -f lightgbm.pom -DnewVersion=${TAG_VERSION} -DgenerateBackupPoms=false
-          faketty mvn --batch-mode --no-transfer-progress org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file \
+          script -e -c "mvn --batch-mode --no-transfer-progress org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file \
             -s gh-settings.xml \
             -Dgpg.executable=scripts/gpghack.sh \
             -DpomFile=lightgbm.pom \
@@ -138,6 +136,6 @@ jobs:
             -Durl=https://maven.pkg.github.com/myui/build-lightgbm-java \
             -Dfile=assets/lightgbm-${TAG_VERSION}.jar \
             -Dsources=assets/lightgbm-${TAG_VERSION}-sources.jar \
-            -Djavadoc=assets/lightgbm-${TAG_VERSION}-javadoc.jar
+            -Djavadoc=assets/lightgbm-${TAG_VERSION}-javadoc.jar"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
