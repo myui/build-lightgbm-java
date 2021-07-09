@@ -1,1 +1,1 @@
-gpg --no-tty --pinentry-mode loopback "$@"
+gpg --pinentry-mode loopback "$@"
