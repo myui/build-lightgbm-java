@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: my-artifact
-          path: ./LightGBM/build/lightgbm-*.jar
+          path: ./LightGBM/build/assets
       - name: Upload Release Assets
         id: upload-release-assets
         uses: dwenegar/upload-release-assets@v1
@@ -112,12 +112,14 @@ jobs:
         with:
           name: my-artifact
           path: assets
-      - name: Update jar to include OSX native libraries
+      - name: Update and rename jars
         run: |
           LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION`
           TAG_VERSION=`echo ${{ github.ref }} | sed -r 's|^refs/tags/v(.*)|\1|'`
           cd assets; ls
           mv lightgbm-${LIGHTGBM_VERSION}.jar lightgbm-${TAG_VERSION}.jar
+          mv lightgbm-${LIGHTGBM_VERSION}-sources.jar lightgbm-${TAG_VERSION}-sources.jar
+          mv lightgbm-${LIGHTGBM_VERSION}-javadoc.jar lightgbm-${TAG_VERSION}-javadoc.jar
           mkdir -p com/microsoft/ml/lightgbm/osx/x86_64
           mv lib_lightgbm.dylib lib_lightgbm_swig.dylib com/microsoft/ml/lightgbm/osx/x86_64
           jar uf lightgbm-${TAG_VERSION}.jar com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm.dylib
