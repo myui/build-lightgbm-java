@@ -128,7 +128,7 @@ jobs:
         run: |
           TAG_VERSION=`echo ${{ github.ref }} | sed -r 's|^refs/tags/v(.*)|\1|'`
           mvn versions:set -f lightgbm.pom -DnewVersion=${TAG_VERSION} -DgenerateBackupPoms=false
-          script -e -c mvn --batch-mode --no-transfer-progres org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file \
+          script -e -c "mvn --batch-mode --no-transfer-progres org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file \
             -s gh-settings.xml \
             -Dgpg.executable=scripts/gpghack.sh \
             -DpomFile=lightgbm.pom \
@@ -136,6 +136,6 @@ jobs:
             -Durl=https://maven.pkg.github.com/myui/build-lightgbm-java \
             -Dfile=assets/lightgbm-${TAG_VERSION}.jar \
             -Dsources=assets/lightgbm-${TAG_VERSION}-sources.jar \
-            -Djavadoc=assets/lightgbm-${TAG_VERSION}-javadoc.jar
+            -Djavadoc=assets/lightgbm-${TAG_VERSION}-javadoc.jar"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
