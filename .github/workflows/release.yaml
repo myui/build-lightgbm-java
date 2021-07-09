@@ -131,7 +131,7 @@ jobs:
           script -q -e -c "mvn --batch-mode --no-transfer-progress org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file \
             -s gh-settings.xml \
             -Dgpg.executable=scripts/gpghack.sh \
-            -Dgpg.passphrase=${{ secrets.GPG_PASSPHRASE }} \
+            -Dgpg.passphrase=\"${{ secrets.GPG_PASSPHRASE }}\" \
             -DpomFile=lightgbm.pom \
             -DrepositoryId=github \
             -Durl=https://maven.pkg.github.com/myui/build-lightgbm-java \
