@@ -147,8 +147,8 @@ jobs:
             -DpomFile=lightgbm.pom \
             -DrepositoryId=github \
             -Durl=https://maven.pkg.github.com/myui/build-lightgbm-java \
-            -Dfile=assets/lightgbm-${TAG_VERSION}.jar \
-            -Dsources=assets/lightgbm-${TAG_VERSION}-sources.jar \
-            -Djavadoc=assets/lightgbm-${TAG_VERSION}-javadoc.jar"
+            -Dfile=assets/jars/lightgbm-${TAG_VERSION}.jar \
+            -Dsources=assets/jars/lightgbm-${TAG_VERSION}-sources.jar \
+            -Djavadoc=assets/jars/lightgbm-${TAG_VERSION}-javadoc.jar"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
