@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       release_id: ${{ steps.create_release.outputs.id }}
+      release_url: ${{ steps.create_release.outputs.url }}
     steps:
       - name: Create release
         id: create_release
@@ -116,16 +117,24 @@ jobs:
         run: |
           LIGHTGBM_VERSION=`cat LIGHTGBM_VERSION`
           TAG_VERSION=`echo ${{ github.ref }} | sed -r 's|^refs/tags/v(.*)|\1|'`
-          cd assets; ls
-          mv lightgbm-${LIGHTGBM_VERSION}.jar lightgbm-${TAG_VERSION}.jar
-          mv lightgbm-${LIGHTGBM_VERSION}-sources.jar lightgbm-${TAG_VERSION}-sources.jar
-          mv lightgbm-${LIGHTGBM_VERSION}-javadoc.jar lightgbm-${TAG_VERSION}-javadoc.jar
-          mkdir -p com/microsoft/ml/lightgbm/osx/x86_64
-          mv lib_lightgbm.dylib lib_lightgbm_swig.dylib com/microsoft/ml/lightgbm/osx/x86_64
+          cd assets; ls; mkdir jars
+          mv lightgbm-${LIGHTGBM_VERSION}.jar jars/lightgbm-${TAG_VERSION}.jar
+          mv lightgbm-${LIGHTGBM_VERSION}-sources.jar jars/lightgbm-${TAG_VERSION}-sources.jar
+          mv lightgbm-${LIGHTGBM_VERSION}-javadoc.jar jars/lightgbm-${TAG_VERSION}-javadoc.jar
+          mkdir -p jars/com/microsoft/ml/lightgbm/osx/x86_64
+          mv lib_lightgbm.dylib lib_lightgbm_swig.dylib jars/com/microsoft/ml/lightgbm/osx/x86_64
+          cd jars
           jar uf lightgbm-${TAG_VERSION}.jar com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm.dylib
           jar uf lightgbm-${TAG_VERSION}.jar com/microsoft/ml/lightgbm/osx/x86_64/lib_lightgbm_swig.dylib
           jar tf lightgbm-${TAG_VERSION}.jar | grep lib_lightgbm
-          cd ..
+          cd ../..
+      - name: Upload Release Assets
+        uses: dwenegar/upload-release-assets@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
+        with:
+          release_id: ${{ needs.create_release.outputs.release_id }}
+          assets_path: ./assets/jars
       - name: Publish to GitHub Packages Apache Maven
         run: |
           TAG_VERSION=`echo ${{ github.ref }} | sed -r 's|^refs/tags/v(.*)|\1|'`
