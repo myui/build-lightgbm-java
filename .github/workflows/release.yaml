@@ -86,7 +86,7 @@ jobs:
   publish_mvn_package:
     name: Public Maven packages to Github Packages
     runs-on: ubuntu-latest
-    needs: [build_on_ubuntu, build_on_osx]
+    needs: [build_on_ubuntu, build_on_osx, create_release]
     steps:
       - name: checkout Github repository
         uses: actions/checkout@v2
