@@ -51,7 +51,6 @@
         <configuration>
           <serverId>ossrh</serverId>
           <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-          <skipStaging>true</skipStaging>
           <autoReleaseAfterClose>true</autoReleaseAfterClose>
         </configuration>
       </plugin>
@@ -83,7 +82,7 @@
               <repositoryId>ossrh</repositoryId>
               <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
               <pomFile>lightgbm-ossrh.pom</pomFile>
-              <!-- <passphrase>${GPG_PASSPHRASE}</passphrase> -->
+              <passphrase>${GPG_PASSPHRASE}</passphrase>
               <gpgArguments>
                 <arg>--pinentry-mode</arg>
                 <arg>loopback</arg>
