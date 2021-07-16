@@ -81,12 +81,14 @@ You can find requirements in your environment by `strings /lib/x86_64-linux-gnu/
 ```sh
 export NEXUS_PASSWD=xxxx
 export LIGHTGBM_VERSION=3.2.1
-export RC_NUMBER=1
+export RC_NUMBER=2
+
+mvn versions:set -f lightgbm-ossrh.pom -DnewVersion=${LIGHTGBM_VERSION}-rc${RC_NUMBER} -DgenerateBackupPoms=false
 
 mvn gpg:sign-and-deploy-file \
-  -s ./settings.xml \
-  -DpomFile=./lightgbm.pom \
-  -DrepositoryId=sonatype-nexus-staging \
+  -s ~/.m2/settings.xml \
+  -DpomFile=./lightgbm-ossrh.pom \
+  -DrepositoryId=ossrh \
   -Durl=https://oss.sonatype.org/service/local/staging/deploy/maven2/ \
   -Dfile=dist/lightgbm-${LIGHTGBM_VERSION}-rc${RC_NUMBER}.jar \
   -Dsources=dist/lightgbm-${LIGHTGBM_VERSION}-rc${RC_NUMBER}-sources.jar \
