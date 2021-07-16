@@ -129,15 +129,15 @@ jobs:
           jar tf lightgbm-${TAG_VERSION}.jar | grep lib_lightgbm
           rm -rf com/
           cd ../..
-       - name: Upload Release Assets
-         uses: dwenegar/upload-release-assets@v1
-         env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
-         with:
-           release_id: ${{ needs.create_release.outputs.release_id }}
-           assets_path: ./assets/jars
-#      - name: Publish to GitHub Packages
-#        run: |
+      - name: Upload Release Assets
+        uses: dwenegar/upload-release-assets@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
+        with:
+          release_id: ${{ needs.create_release.outputs.release_id }}
+          assets_path: ./assets/jars
+#     - name: Publish to GitHub Packages
+#       run: |
 #          TAG_VERSION=`echo ${{ github.ref }} | sed -r 's|^refs/tags/v(.*)|\1|'`
 #          mvn versions:set -f lightgbm-gh.pom -DnewVersion=${TAG_VERSION} -DgenerateBackupPoms=false
 #          script -q -e -c "mvn --batch-mode --no-transfer-progress org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file \
