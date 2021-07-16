@@ -166,7 +166,7 @@ jobs:
         run: |
           export TAG_VERSION=`echo ${{ github.ref }} | sed -r 's|^refs/tags/v(.*)|\1|'`
           mvn versions:set -f lightgbm-ossrh.pom -DnewVersion=${TAG_VERSION} -DgenerateBackupPoms=false
-          script -q -e -c "mvn --batch-mode --no-transfer-progress -s ossrh-settings.xml -f ossrh-deploy.pom -Prelease clean deploy -Dgpg.passphrase=\"${{ secrets.GPG_PASSPHRASE }}\""
+          script -q -e -c "mvn --batch-mode --no-transfer-progress -s ossrh-settings.xml -f ossrh-deploy.pom -Prelease clean gpg:sign deploy"
         env:
           MAVEN_USERNAME: ${{ secrets.SONATYPE_USER }}
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWD }}
