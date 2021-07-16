@@ -1,0 +1,97 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>io.github.myui</groupId>
+  <artifactId>sign-and-deploy-lightgbm</artifactId>
+  <version>1</version>
+  <packaging>pom</packaging>
+  <name>Profiles to run gpg:sign-and-deploy lightgbm</name>
+  <description>
+    This pom works as a tool for pushing a release to the Sonatype Nexus repository.
+    Instead of using the 'bundle' mechanism, this signs and pushes each of the four pieces:
+    main jar, pom, -sources jar, and -javadoc jar. To use this you have to have a Maven
+    settings.xml to configure your credentials on the Apache Nexus instance, and 
+    to communicate your GPG key and passphrase.
+
+    Drop this file into a directory with the pieces, and run mvn -f sonatype-deploy.pom -Prelease deploy
+  </description>
+  <url>https://github.com/myui/build-lightgbm-java</url>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+  <developers>
+    <developer>
+      <name>Makoto Yui</name>
+      <email>myui[at]apache.org</email>
+      <organization>Treasure Data, Inc.</organization>
+      <organizationUrl>https://www.treasuredata.com/</organizationUrl>
+    </developer>
+  </developers>
+  <scm>
+    <connection>scm:git:git://github.com/myui/build-lightgbm-java.git</connection>
+    <developerConnection>scm:git:ssh://github.com/myui/build-lightgbm-java.git</developerConnection>
+    <url>https://github.com/myui/build-lightgbm-java</url>
+  </scm>
+  <distributionManagement>
+    <repository>
+      <id>ossrh</id>
+      <name>Central Repository OSSRH</name>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+  </distributionManagement>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.sonatype.plugins</groupId>
+        <artifactId>nexus-staging-maven-plugin</artifactId>
+        <version>1.6.8</version>
+        <extensions>true</extensions>
+        <configuration>
+          <serverId>ossrh</serverId>
+          <nexusUrl>https://oss.sonatype.org/</nexusUrl>
+          <skipStaging>true</skipStaging>
+          <autoReleaseAfterClose>true</autoReleaseAfterClose>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <profiles>
+    <profile>
+      <id>release</id>
+      <build>
+        <defaultGoal>verify</defaultGoal>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <version>1.6</version>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign-and-deploy-file</goal>
+                </goals>
+              </execution>
+            </executions>
+            <configuration>
+              <file>assets/jars/lightgbm-${TAG_VERSION}.jar</file>
+              <javadoc>assets/jars/lightgbm-${TAG_VERSION}-sources.jar</javadoc>
+              <sources>assets/jars/lightgbm-${TAG_VERSION}-javadoc.jar</sources>
+              <repositoryId>ossrh</repositoryId>
+              <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+              <pomFile>lightgbm-ossrh.pom</pomFile>
+              <!-- <passphrase>${GPG_PASSPHRASE}</passphrase> -->
+              <gpgArguments>
+                <arg>--pinentry-mode</arg>
+                <arg>loopback</arg>
+              </gpgArguments>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>
