@@ -79,7 +79,16 @@
               <file>assets/jars/lightgbm-${TAG_VERSION}.jar</file>
               <javadoc>assets/jars/lightgbm-${TAG_VERSION}-sources.jar</javadoc>
               <sources>assets/jars/lightgbm-${TAG_VERSION}-javadoc.jar</sources>
-              <repositoryId>ossrh</repositoryId>
+			  <ascDirectory>assets/jars</ascDirectory>
+			  <files>
+				assets/jars/lightgbm-${TAG_VERSION}.pom.asc,
+				assets/jars/lightgbm-${TAG_VERSION}.jar.asc,
+				assets/jars/lightgbm-${TAG_VERSION}-sources.jar.asc,
+				assets/jars/lightgbm-${TAG_VERSION}-javadoc.jar.asc
+			  </files>
+			  <types>pom.asc,jar.asc,jar.asc,jar.asc</types>
+			  <classifiers>,,,</classifiers>
+			  <repositoryId>ossrh</repositoryId>
               <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
               <pomFile>lightgbm-ossrh.pom</pomFile>
               <!-- <passphrase>${GPG_PASSPHRASE}</passphrase> -->
@@ -90,17 +99,6 @@
             </configuration>
           </plugin>
         </plugins>
-        <!-- disable default maven deploy plugin since we are using gpg:sign-and-deploy-file -->
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <artifactId>maven-deploy-plugin</artifactId>
-                    <configuration>
-                        <skip>true</skip>
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
       </build>
     </profile>
   </profiles>
