@@ -92,14 +92,14 @@
               </execution>
             </executions>
             <configuration>
-              <file>assets/jars/lightgbm-${TAG_VERSION}.jar</file>
-              <javadoc>assets/jars/lightgbm-${TAG_VERSION}-sources.jar</javadoc>
-              <sources>assets/jars/lightgbm-${TAG_VERSION}-javadoc.jar</sources>
+              <file>assets/jars/lightgbm-${env.TAG_VERSION}.jar</file>
+              <javadoc>assets/jars/lightgbm-${env.TAG_VERSION}-sources.jar</javadoc>
+              <sources>assets/jars/lightgbm-${env.TAG_VERSION}-javadoc.jar</sources>
               <repositoryId>ossrh</repositoryId>
               <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
               <pomFile>lightgbm-ossrh.pom</pomFile>
-              <keyname>${GPG_KEYNAME}</keyname>
-              <passphrase>${GPG_PASSPHRASE}</passphrase>
+              <keyname>${env.GPG_KEYNAME}</keyname>
+              <passphrase>${env.GPG_PASSPHRASE}</passphrase>
               <gpgArguments>
                 <arg>--pinentry-mode</arg>
                 <arg>loopback</arg>
