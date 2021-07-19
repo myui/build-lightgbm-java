@@ -90,7 +90,12 @@ jobs:
     steps:
       - name: checkout Github repository
         uses: actions/checkout@v2
-      - name: Set up JDK 1.8 and Maven for publishing to GitHub Packages
+      - name: Import GPG key
+        uses: crazy-max/ghaction-import-gpg@v3
+        with:
+          gpg-private-key: ${{ secrets.GPG_SIGNING_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+	  - name: Set up JDK 1.8 and Maven for publishing to GitHub Packages
         uses: actions/setup-java@v1
         with: # This automatically configures the Maven settings.xml file for GitHub Packages.
           java-version: 1.8
