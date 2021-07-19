@@ -136,9 +136,11 @@ jobs:
         run: |
           TAG_VERSION=`echo ${{ github.ref }} | sed -r 's|^refs/tags/v(.*)|\1|'`
           mvn versions:set -f lightgbm-gh.pom -DnewVersion=${TAG_VERSION} -DgenerateBackupPoms=false
+          gpg --list-secret-keys --keyid-format LONG
           mvn --batch-mode --no-transfer-progress org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file \
             -s gh-settings.xml \
             -Dgpg.executable=scripts/gpghack.sh \
+            -Dgpg.keyname=\"${{ secrets.GPG_KEYNAME }}\" \
             -Dgpg.passphrase=\"${{ secrets.GPG_PASSPHRASE }}\" \
             -DpomFile=lightgbm-gh.pom \
             -DrepositoryId=github \
@@ -167,3 +169,4 @@ jobs:
           MAVEN_USERNAME: ${{ secrets.SONATYPE_USER }}
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWD }}
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          GPG_KEYNAME: ${{ secrets.GPG_PASSPHRASE }}
