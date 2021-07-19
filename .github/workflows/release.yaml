@@ -140,8 +140,8 @@ jobs:
           mvn --batch-mode --no-transfer-progress org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file \
             -s gh-settings.xml \
             -Dgpg.executable=scripts/gpghack.sh \
-            -Dgpg.keyname=\"${{ secrets.GPG_KEYNAME }}\" \
-            -Dgpg.passphrase=\"${{ secrets.GPG_PASSPHRASE }}\" \
+            -Dgpg.keyname="$GPG_KEYNAME" \
+            -Dgpg.passphrase="$GPG_PASSPHRASE" \
             -DpomFile=lightgbm-gh.pom \
             -DrepositoryId=github \
             -Durl=https://maven.pkg.github.com/myui/build-lightgbm-java \
@@ -150,6 +150,8 @@ jobs:
             -Djavadoc=assets/jars/lightgbm-${TAG_VERSION}-javadoc.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+          GPG_KEYNAME: ${{ secrets.GPG_PASSPHRASE }}
       - name: Set up JDK 1.8 and Maven for publishing to Maven Central Repository
         uses: actions/setup-java@v1
         with: # running setup-java overwrites the settings.xml
