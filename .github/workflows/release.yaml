@@ -136,7 +136,7 @@ jobs:
         run: |
           TAG_VERSION=`echo ${{ github.ref }} | sed -r 's|^refs/tags/v(.*)|\1|'`
           mvn versions:set -f lightgbm-gh.pom -DnewVersion=${TAG_VERSION} -DgenerateBackupPoms=false
-          script -q -e -c "mvn --batch-mode --no-transfer-progress org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file \
+          mvn --batch-mode --no-transfer-progress org.apache.maven.plugins:maven-gpg-plugin:1.6:sign-and-deploy-file \
             -s gh-settings.xml \
             -Dgpg.executable=scripts/gpghack.sh \
             -Dgpg.passphrase=\"${{ secrets.GPG_PASSPHRASE }}\" \
@@ -145,7 +145,7 @@ jobs:
             -Durl=https://maven.pkg.github.com/myui/build-lightgbm-java \
             -Dfile=assets/jars/lightgbm-${TAG_VERSION}.jar \
             -Dsources=assets/jars/lightgbm-${TAG_VERSION}-sources.jar \
-            -Djavadoc=assets/jars/lightgbm-${TAG_VERSION}-javadoc.jar"
+            -Djavadoc=assets/jars/lightgbm-${TAG_VERSION}-javadoc.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # This token is provided by Actions
       - name: Set up JDK 1.8 and Maven for publishing to Maven Central Repository
@@ -162,7 +162,7 @@ jobs:
         run: |
           export TAG_VERSION=`echo ${{ github.ref }} | sed -r 's|^refs/tags/v(.*)|\1|'`
           mvn versions:set -f lightgbm-ossrh.pom -DnewVersion=${TAG_VERSION} -DgenerateBackupPoms=false
-          script -q -e -c "mvn --batch-mode --no-transfer-progress -s ossrh-settings.xml -f ossrh-deploy.pom -Prelease clean deploy"
+          mvn --batch-mode --no-transfer-progress -s ossrh-settings.xml -f ossrh-deploy.pom -Prelease clean deploy
         env:
           MAVEN_USERNAME: ${{ secrets.SONATYPE_USER }}
           MAVEN_PASSWORD: ${{ secrets.SONATYPE_PASSWD }}
