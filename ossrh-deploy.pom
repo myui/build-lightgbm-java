@@ -99,7 +99,7 @@
               <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
               <pomFile>lightgbm-ossrh.pom</pomFile>
               <keyname>${GPG_KEYNAME}</keyname>
-              <!-- <passphrase>${GPG_PASSPHRASE}</passphrase> -->
+              <passphrase>${GPG_PASSPHRASE}</passphrase>
               <gpgArguments>
                 <arg>--pinentry-mode</arg>
                 <arg>loopback</arg>
