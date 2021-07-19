@@ -55,6 +55,21 @@
           <skipStaging>true</skipStaging>
         </configuration>
       </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>2.8.2</version>
+        <configuration>
+          <updateReleaseInfo>true</updateReleaseInfo>
+        </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>deploy</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
   <profiles>
@@ -80,7 +95,7 @@
               <file>assets/jars/lightgbm-${TAG_VERSION}.jar</file>
               <javadoc>assets/jars/lightgbm-${TAG_VERSION}-sources.jar</javadoc>
               <sources>assets/jars/lightgbm-${TAG_VERSION}-javadoc.jar</sources>
-			  <repositoryId>ossrh</repositoryId>
+              <repositoryId>ossrh</repositoryId>
               <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
               <pomFile>lightgbm-ossrh.pom</pomFile>
               <!-- <passphrase>${GPG_PASSPHRASE}</passphrase> -->
