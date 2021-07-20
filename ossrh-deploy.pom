@@ -92,6 +92,7 @@
               </execution>
             </executions>
             <configuration>
+              <updateReleaseInfo>true</updateReleaseInfo>
               <file>assets/jars/lightgbm-${env.TAG_VERSION}.jar</file>
               <javadoc>assets/jars/lightgbm-${env.TAG_VERSION}-sources.jar</javadoc>
               <sources>assets/jars/lightgbm-${env.TAG_VERSION}-javadoc.jar</sources>
